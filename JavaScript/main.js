@@ -11,10 +11,12 @@ const greetingAge = document.getElementById("greetingAge");
 const feedbackAlertAge = document.getElementById("feedbackAlertAge");
 
 const regex = /^[A-Za-zÁéíóúÁÉÍÓÚñÑ ]+$/ ;
+const mailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ ;
+const ageRegex = /^[1-9]+$/;
 
-formBtn.addEventListener("click", ( evento ) => {
+sendBtn.addEventListener("click", ( evento ) => {
     evento.preventDefault();
-    if( nameIpt.value.length < 3 && regex.test(nameIpt.value) ){
+    if( nameIpt.value.length < 3 || !regex.test(nameIpt.value) ){
         feedbackAlert.style.display = "block";
         greeting.innerText = "";
     } else {
@@ -24,25 +26,44 @@ formBtn.addEventListener("click", ( evento ) => {
 });
 
 //segundo formulario
-mailBtn.addEventListener("click", ( evento ) => {
+sendBtn.addEventListener("click", ( evento ) => {
     evento.preventDefault();
-    if( mailIpt.value.length === 0 ){
+    if( !mailRegex.test(mailIpt.value) ){
         feedbackAlertMail.style.display = "block";
         greetingMail.innerText = "";
     } else {
-        greetingMail.innerText = `¡Hola, ${nameIpt.value}!`;
+        greetingMail.innerText = `¡Correo Valido!`;
         feedbackAlertMail.style.display = "none";
     }
 });
 
 //Tercer formulario
-ageBtn.addEventListener("click", ( evento ) => {
+sendBtn.addEventListener("click", ( evento ) => {
     evento.preventDefault();
-    if( ageIpt.value.length === 0 ){
+    if( ageIpt.value.length < 1 || !ageRegex.test(ageIpt.value)){
         feedbackAlertAge.style.display = "block";
         greetingAge.innerText = "";
     } else {
-        greetingAge.innerText = `¡Hola, ${nameIpt.value}!`;
+        greetingAge.innerText = `¡Edad valida!`;
         feedbackAlertAge.style.display = "none";
     }
 });
+
+clearBtn.addEventListener("click", ( evento ) => {
+    evento.preventDefault();
+        //oculta todas las alertas
+    feedbackAlertMail.style.display = "none";
+    feedbackAlertAge.style.display = "none";
+    feedbackAlert.style.display = "none";
+    
+    //borra todos los saludos
+    greetingAge.innerText = "";
+    greetingMail.innerText = "";
+    greeting.innerText = "";
+
+    //borra las entradas
+    nameIpt.value = "";
+    mailIpt.value = "";
+    ageIpt.value = "";
+});
+
